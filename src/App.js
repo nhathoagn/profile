@@ -35,6 +35,8 @@ function App() {
         const [token, setToken] = useState();
         if (!token){
             return <Login setToken={setToken}/>
+        }else {
+            <Navigate to="/showusers" state={{ from: login}}/>
         }
         return (
             <div className="login-container">
