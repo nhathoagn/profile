@@ -6,9 +6,12 @@ import {
     BrowserRouter,
     Routes,
     Route,
+    useNavigate,
+    Navigate
 } from "react-router-dom";
 
 import axios from "axios";
+import login from "./compunents/Login/Login";
 function App() {
 
   //   const [state, setState] = useState({
@@ -38,8 +41,9 @@ function App() {
                <Header/>
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/login" element={<Login />}>
-                            <Route index element={<ShowUsers />} />
+                        <Route path="/login" element={<Login setToken={setToken}/>}>
+                            <Route path="/showusers" element={<ShowUsers />} />
+
                         </Route>
                     </Routes>
                 </BrowserRouter>
