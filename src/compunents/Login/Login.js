@@ -3,33 +3,37 @@ import ReactDOM from "react-dom";
 import {Container} from "react-bootstrap";
 import {Form} from "react-bootstrap";
 import {Button} from "react-bootstrap";
+import PropTypes from 'prop-types';
 
+async function loginUser(credentials) {
+    return fetch('http://localhost:9000/login',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+    })
+        .then(data => data.json())
+}
+function Login({setToken})  {
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
 
-class Login extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            password: ""
-        }
+    const handleButton = async (e) => {
+      e.preventDefault();
+      const token =  await  loginUser({
+          email,
+          password
+      });
+   setToken(token)
     }
-    handleChange = e =>{
-        this.setState({
-            email: e.target.value,
-            password: e.target.value
-        })
-
-    };
-
-
-   render() {
        return(
            <Container className="login-container">
-               <Form>
+               <Form onSubmit={handleButton}>
                    <Form.Label id="login-label">Login</Form.Label>
                    <Form.Group className="mb-3" controlId="formBasicEmail">
                        <Form.Label>Email address</Form.Label>
-                       <Form.Control type="email" placeholder="Enter email"  onChange={this.handleChange}/>
+                       <Form.Control type="email"  placeholder="Enter email"  onChange={ e => setEmail(e.target.value)}/>
                        <Form.Text className="text-muted">
                            We'll never share your email with anyone else.
                        </Form.Text>
@@ -37,17 +41,21 @@ class Login extends React.Component{
 
                    <Form.Group className="mb-3" controlId="formBasicPassword">
                        <Form.Label>Password</Form.Label>
-                       <Form.Control type="password" placeholder="Password" onChange={this.handleChange}/>
+                       <Form.Control type="password" placeholder="Password"  onChange={e => setPassword(e.target.value)}/>
                    </Form.Group>
 
-                   <Button variant="primary" type="submit" onClick={ () => this.props.handleButton(this.state.email,this.state.password)}>
+                   <Button variant="primary" type="submit" >
                        Login
                    </Button>
                </Form>
            </Container>
        )
-   }
 
+
+
+}
+Login.propTypes ={
+    setToken: PropTypes.func.isRequired
 
 }
 export default Login;
