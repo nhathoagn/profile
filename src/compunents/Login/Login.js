@@ -25,7 +25,7 @@ function Login({setToken})  {
           email,
           password
       });
-   setToken(token)
+     this.setToken(token)
     }
        return(
            <Container className="login-container">
@@ -54,8 +54,5 @@ function Login({setToken})  {
 
 
 }
-Login.propTypes ={
-    setToken: PropTypes.func.isRequired
 
-}
 export default Login;

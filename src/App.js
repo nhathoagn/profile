@@ -7,46 +7,23 @@ import {
     Routes,
     Route,
     useNavigate,
-    Navigate
+    Navigate, Redirect
 } from "react-router-dom";
 
-import axios from "axios";
+
 import login from "./compunents/Login/Login";
 function App() {
+        const [token, setToken] = useState("");
 
-  //   const [state, setState] = useState({
-  //       users: []
-  //   })
-  //   useEffect( () =>{
-  //       axios.get("https://my-json-server.typicode.com/nhathoagn/db-profile/db")
-  //           .then(res => setState({users: res.data}))
-  //   }, []);
-  // const  handleButton = (email,password) =>{
-  //       setState({
-  //           users: this.state.users.map( user =>{
-  //               if ( (user.email === email) & (user.password === password)){
-  //                   user.isLogin = !user.isLogin;
-  //               }
-  //             return user;
-  //           })
-  //       })
-  //
-  //   }
-        const [token, setToken] = useState();
-        if (!token){
-            return <Login setToken={setToken}/>
-        }else {
-            <Navigate to="/showusers" state={{ from: login}}/>
-        }
         return (
             <div className="login-container">
-               <Header/>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/login" element={<Login setToken={setToken}/>}>
-                            <Route path="/showusers" element={<ShowUsers />} />
+                <Header/>
 
-                        </Route>
+                <BrowserRouter>
+                    <Routes >
+
+                         {token ? <Route path="/show" element={<ShowUsers/>}/> : <Route path="/login" element={<Login setToken={token}/>}/> }
+
                     </Routes>
                 </BrowserRouter>
             </div>
