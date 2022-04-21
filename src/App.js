@@ -21,9 +21,9 @@ function App() {
 
                 <BrowserRouter>
                     <Routes >
-
-                         {token ? <Route path="/show" element={<ShowUsers/>}/> : <Route path="/login" element={<Login setToken={token}/>}/> }
-
+                        {/*{token ?  <Route  path="/show" element={<ShowUsers/>}/> : <Route  path="/login" element={<Login setToken={setToken}/>}/> }*/}
+                        <Route path="/login" element={<Login setToken={setToken}/>}/>
+                        <Route path="/user" element={<ShowUsers/>}/>
                     </Routes>
                 </BrowserRouter>
             </div>

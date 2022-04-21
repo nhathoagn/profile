@@ -4,28 +4,25 @@ import {Container} from "react-bootstrap";
 import {Form} from "react-bootstrap";
 import {Button} from "react-bootstrap";
 import PropTypes from 'prop-types';
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 async function loginUser(credentials) {
-    return fetch('http://localhost:9000/login',{
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    })
-        .then(data => data.json())
+    return (await axios.post('http://localhost:9000/login', credentials)).data;
 }
 function Login({setToken})  {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
-
+    let navigate = useNavigate();
     const handleButton = async (e) => {
       e.preventDefault();
-      const token =  await  loginUser({
+      const response =  await  loginUser({
           email,
           password
       });
-     this.setToken(token)
+     setToken(response.token)
+        console.log(response.token)
+        navigate("/user")
     }
        return(
            <Container className="login-container">
